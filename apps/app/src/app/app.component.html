@@ -1,9 +1,16 @@
-<div style="text-align: center">
-  <h1>Welcome to app!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-    alt="Nx - Smart, Extensible Build Framework"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<table>
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <dd-image-input (fileSelected)="onBeforeFileSelected($event)"></dd-image-input>
+    </td>
+    <td>
+      <dd-image-input (fileSelected)="onAfterFileSelected($event)"></dd-image-input>
+    </td>
+  </tr>
+</table>
+
+<button (click)="onSubmitButtonClick()">あいうえお</button>

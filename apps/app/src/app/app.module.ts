@@ -4,9 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { DdImageInputModule } from './_shared/components/extra';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule, 
+    DdImageInputModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
