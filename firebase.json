@@ -1,0 +1,39 @@
+{
+  "hosting": [
+    {
+      "target": "app",
+      "public": "dist/apps/app",
+      "ignore": [
+        "**/.*"
+      ],
+      "headers": [
+        {
+          "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "public,max-age=31536000,immutable"
+            }
+          ]
+        }
+      ],
+      "rewrites": [
+        {
+           "source": "/api/**",
+           "function": "api"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "predeploy": [
+      "npx nx build api --prod",
+      "npx package-json-converter ./dist/apps/api/package.json"
+    ],
+    "source": "dist/apps/api"
+  }
+}

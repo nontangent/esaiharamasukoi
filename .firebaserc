@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "esaiharamasukoi": {
+      "hosting": {
+        "app": [
+          "esaiharamasukoi"
+        ]
+      }
+    }
+  }
+}
