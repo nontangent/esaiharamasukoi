@@ -1,2 +1,3 @@
 <input type="file" (change)="selected($event)" #fileInput>
-<img class="image" [src]="src">
+<img class="image" *ngIf="src" [src]="src">
+<p>クリックかドラッグ&ドロップ</p>

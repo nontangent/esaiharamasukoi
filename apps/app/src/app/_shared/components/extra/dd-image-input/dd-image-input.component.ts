@@ -9,16 +9,16 @@ export class DdImageInputComponent {
   @Input()
   defaultSrc: string = 'assets/sample.jpg';
 
-  private _src: string = '';
-  public get src(): string {
-    return this._src || this.defaultSrc;
+  private _src: string | null = null;
+  public get src(): string | null {
+    return this._src;
   };
 
   @ViewChild('fileInput', {static: false})
   fileInput!: ElementRef;
 
   @Output()
-  fileSelected = new EventEmitter<any>();
+  fileSelected = new EventEmitter<File>();
 
   @HostListener('click')
   clickImageInput() {
