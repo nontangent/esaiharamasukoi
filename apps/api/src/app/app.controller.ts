@@ -1,5 +1,5 @@
-import { TablePost, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { TablePost, Team, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { HasMimeType, IsFile, MaxFileSize, MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
 
 import { AppService } from './app.service';
@@ -14,6 +14,11 @@ export class FormImageData {
 @Controller()
 export class AppController {
   constructor(private readonly app: AppService) {}
+
+  @Get('teams')
+  async getTeams(): Promise<Team[]> {
+    return await this.app.getTeams();
+  }
 
   @Post('teams/:teamId/images')
   @FormDataRequest()

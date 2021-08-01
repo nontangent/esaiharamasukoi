@@ -1,5 +1,5 @@
 import { HttpException, HttpService, HttpStatus, Injectable } from '@nestjs/common';
-import { TablePost, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
+import { TablePost, Team, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
 import { MemoryStoredFile } from 'nestjs-form-data';
 import { map, tap } from 'rxjs/operators';
 import * as FormData from 'form-data';
@@ -10,6 +10,16 @@ const ACCESS_TOKEN = environment.accessToken;
 @Injectable()
 export class AppService {
   constructor(private http: HttpService) { }
+
+  async getTeams(): Promise<Team[]> {
+    const endpoint = `https://api.esa.io/v1/teams/`;
+    const headers = { Authorization: `Bearer ${ACCESS_TOKEN}`};
+    return await this.http.get(endpoint, {headers}).pipe(
+      map(res => res.data),
+      map(data => data.teams),
+    ).toPromise();
+  }
+
   async uploadImage(teamId: string, image: MemoryStoredFile): Promise<UploadImageResponse> {
     try {
       const meta = await this.postAttachmentsPolicies(teamId, image); 
