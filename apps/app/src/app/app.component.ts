@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from './app.service';
 import { Validators } from '@angular/forms';
-import { TablePost } from '@esaiharamasukoi/api-interfaces';
+import { TablePost, Team } from '@esaiharamasukoi/api-interfaces';
 import { startWith } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +11,7 @@ import { startWith } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
   form = this.app.form.group({
-    teamId: ['neco', [Validators.required, Validators.nullValidator]],
+    teamId: [null, [Validators.required, Validators.nullValidator]],
     before: [null, [Validators.required, Validators.nullValidator]],
     after: [null, [Validators.required, Validators.nullValidator]],
   });
@@ -19,20 +19,44 @@ export class AppComponent implements OnInit {
   canSubmit = false;
   clipValue: string | null = null;
 
+  teams: Team[] = [];
+  teams$ = this.app.getTeams();
+
+  teamId: string | null = null;
+  // teamId$ = this.route.paramMap.pipe(
+  //   map(paramMap => paramMap.get('teamId') ?? null), 
+  // );
+
   isLoading$ = this.app.loading.isLoading$.pipe(startWith(false));
 
-  constructor(private app: AppService) { }
+  constructor(
+    private app: AppService, 
+    // private route: ActivatedRoute,
+  ) {
+    console.debug('test');
+  }
 
   ngOnInit(): void {
     this.form.get('before')!.valueChanges.subscribe(() => this.canSubmit = true);
     this.form.get('after')!.valueChanges.subscribe(() => this.canSubmit = true);
+    this.teams$.subscribe(teams => this.openSheets(teams));
   }
 
-  onBeforeFileSelected(file: File) {
+  openSheets(teams: Team[]): void {
+    const buildItems = (teams: Team[]) => teams.map(team => ({id: team.name, label: team.description}));
+    const sheets = this.app.sheets.openMenuSheet(buildItems(teams));
+    sheets.afterDismissed().toPromise().then(({id}) => this.navigateToTeamPage(id));
+  }
+
+  navigateToTeamPage(id: string): void {
+    // TODO: implements
+  }
+
+  onBeforeFileSelected(file: File): void {
     this.onFileSelected('before', file);
   }
 
-  onAfterFileSelected(file: File) {
+  onAfterFileSelected(file: File): void {
     this.onFileSelected('after', file);
   }
 
