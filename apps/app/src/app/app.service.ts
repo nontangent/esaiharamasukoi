@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TablePost, Team, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { LoadingService, SheetsService, SnackBarService } from './_shared/services';
 import { Observable } from 'rxjs';
@@ -18,6 +19,7 @@ export class AppService {
     public snackBar: SnackBarService,
     public sheets: SheetsService,
     public loading: LoadingService,
+    public router: Router,
   ) { }
 
   getTeams(): Observable<Team[]> {
