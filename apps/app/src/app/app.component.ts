@@ -32,9 +32,7 @@ export class AppComponent implements OnInit {
   constructor(
     private app: AppService, 
     // private route: ActivatedRoute,
-  ) {
-    console.debug('test');
-  }
+  ) { }
 
   ngOnInit(): void {
     this.form.get('before')!.valueChanges.subscribe(() => this.canSubmit = true);
@@ -45,7 +43,7 @@ export class AppComponent implements OnInit {
   openSheets(teams: Team[]): void {
     const buildItems = (teams: Team[]) => teams.map(team => ({id: team.name, label: team.description}));
     const sheets = this.app.sheets.openMenuSheet(buildItems(teams));
-    sheets.afterDismissed().toPromise().then(({id}) => this.navigateToTeamPage(id));
+    sheets.afterDismissed().toPromise().then(item => item && this.navigateToTeamPage(item.id));
   }
 
   navigateToTeamPage(id: string): void {
