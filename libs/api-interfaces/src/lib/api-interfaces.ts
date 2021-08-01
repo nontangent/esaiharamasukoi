@@ -9,3 +9,11 @@ export interface TablePost {
   url?: string;
   name?: string;
 }
+
+export interface Team {
+  name: string;
+  privacy: 'open' | string;
+  description: string;
+  icon: string;
+  url: string;
+}
