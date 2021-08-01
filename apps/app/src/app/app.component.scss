@@ -3,14 +3,6 @@
   font-family: sans-serif;
   width: 100vw;
   height: 100vh;
-
-  organisms-top-navigator {
-    height: 56px;
-  }
-
-  organisms-ba-table-section {
-    height: calc(100% - 56px);
-  }
   
   .loading {
     position: fixed;

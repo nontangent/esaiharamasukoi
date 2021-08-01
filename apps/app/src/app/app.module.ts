@@ -4,17 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-import { AppComponent } from './app.component';
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppComponent } from './app.component';
 import { DdImageInputModule } from './_shared/components/extra';
-import { 
-  TopNavigatorModule,
-  BaTableSectionModule,
-} from './_shared/components/organisms';
 import { SnackBarModule } from './_shared/services';
+import { TeamModule } from './_shared/components/templates';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,10 +22,10 @@ import { SnackBarModule } from './_shared/services';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     HttpClientModule, 
-    DdImageInputModule, 
-    TopNavigatorModule,
-    BaTableSectionModule,
+    DdImageInputModule,
     SnackBarModule,
+    // Templates
+    TeamModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

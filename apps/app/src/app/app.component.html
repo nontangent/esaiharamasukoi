@@ -1,13 +1,8 @@
-<organisms-top-navigator 
-  title="esaiharamasukoi"
+<templates-team
   (doneButtonClick)="onSubmitButtonClick()"
-></organisms-top-navigator>
-
-<organisms-ba-table-section
   (beforeFileSelected)="onBeforeFileSelected($event)"
   (afterFileSelected)="onAfterFileSelected($event)"
-></organisms-ba-table-section>
-
+></templates-team>
 <div class="loading" *ngIf="isLoading$ | async">
   <mat-spinner></mat-spinner>
 </div>
