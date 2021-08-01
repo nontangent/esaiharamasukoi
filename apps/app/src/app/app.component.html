@@ -1,16 +1,13 @@
-<table>
-  <tr>
-    <th>Before</th>
-    <th>After</th>
-  </tr>
-  <tr>
-    <td>
-      <dd-image-input (fileSelected)="onBeforeFileSelected($event)"></dd-image-input>
-    </td>
-    <td>
-      <dd-image-input (fileSelected)="onAfterFileSelected($event)"></dd-image-input>
-    </td>
-  </tr>
-</table>
+<organisms-top-navigator 
+  title="esaiharamasukoi"
+  (doneButtonClick)="onSubmitButtonClick()"
+></organisms-top-navigator>
 
-<button (click)="onSubmitButtonClick()">あいうえお</button>
+<organisms-ba-table-section
+  (beforeFileSelected)="onBeforeFileSelected($event)"
+  (afterFileSelected)="onAfterFileSelected($event)"
+></organisms-ba-table-section>
+
+<div class="loading" *ngIf="isLoading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
