@@ -1,0 +1,14 @@
+<table>
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td>
+      <dd-image-input (fileSelected)="beforeFileSelected.emit($event)"></dd-image-input>
+    </td>
+    <td>
+      <dd-image-input (fileSelected)="afterFileSelected.emit($event)"></dd-image-input>
+    </td>
+  </tr>
+</table>

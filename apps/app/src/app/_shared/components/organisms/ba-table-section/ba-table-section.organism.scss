@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  table {
+    width: 100%;
+    height: 100%;
+    border-spacing: 0;
+
+    th {
+      height: 2em;
+      color: white;
+      background: #3f51b5;
+    }
+
+    td {
+      width: 50%;
+      height: calc(100% - 2em);
+    }
+  }
+}
