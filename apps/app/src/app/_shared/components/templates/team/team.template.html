@@ -1,0 +1,9 @@
+<organisms-top-navigator 
+  title="esaiharamasukoi"
+  (doneButtonClick)="doneButtonClick.emit()"
+></organisms-top-navigator>
+
+<organisms-ba-table-section
+  (beforeFileSelected)="beforeFileSelected.emit($event)"
+  (afterFileSelected)="afterFileSelected.emit($event)"
+></organisms-ba-table-section>
