@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { startWith } from 'rxjs/operators';
 import { AppService } from './app.service';
 
@@ -7,7 +7,11 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isLoading$ = this.app.loading.isLoading$.pipe(startWith(false));
   constructor(private app: AppService) { }
+
+  ngOnInit(): void {
+    this.app.auth.initialize();
+  }
 }
