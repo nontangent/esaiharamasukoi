@@ -1,28 +1,28 @@
 import { HttpException, HttpService, HttpStatus, Injectable } from '@nestjs/common';
 import { TablePost, Team, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
 import { MemoryStoredFile } from 'nestjs-form-data';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as FormData from 'form-data';
-import { environment } from '../environments/environment';
-
-const ACCESS_TOKEN = environment.accessToken;
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/ja';
+dayjs.locale('ja');
 
 @Injectable()
 export class AppService {
   constructor(private http: HttpService) { }
 
-  async getTeams(): Promise<Team[]> {
+  async getTeams(token: string): Promise<Team[]> {
     const endpoint = `https://api.esa.io/v1/teams/`;
-    const headers = { Authorization: `Bearer ${ACCESS_TOKEN}`};
+    const headers = { Authorization: `Bearer ${token}`};
     return await this.http.get(endpoint, {headers}).pipe(
       map(res => res.data),
       map(data => data.teams),
     ).toPromise();
   }
 
-  async uploadImage(teamId: string, image: MemoryStoredFile): Promise<UploadImageResponse> {
+  async uploadImage(token: string, teamId: string, image: MemoryStoredFile): Promise<UploadImageResponse> {
     try {
-      const meta = await this.postAttachmentsPolicies(teamId, image); 
+      const meta = await this.postAttachmentsPolicies(token, teamId, image); 
       await this.uploadS3(image, meta);
       return {url: meta.attachment.url};
     } catch (error) {
@@ -34,11 +34,11 @@ export class AppService {
     } 
   }
 
-  async createTablePost(post: TablePost): Promise<TablePost> {
+  async createTablePost(token: string, post: TablePost): Promise<TablePost> {
     try {
-      const name = `プルリク画像置き場/test`;
+      const name = `プルリク画像置き場/${dayjs().format('YYYY-MM-DD-HH-mm')}`;
       const data = buildCreatePostRequestData(name, post.before, post.after);
-      const url = await this.createPost(post.teamId, data);
+      const url = await this.createPost(token, post.teamId, data);
       return {...post, url, name};
     } catch (error) {
       console.error(error);
@@ -49,19 +49,18 @@ export class AppService {
     } 
   }
 
-  private async createPost(teamId: string, data: CreatePostRequestData): Promise<string> {
+  private async createPost(token: string, teamId: string, data: CreatePostRequestData): Promise<string> {
     const endpoint = `https://api.esa.io/v1/teams/${teamId}/posts`;
-    const headers = { Authorization: `Bearer ${ACCESS_TOKEN}`};
+    const headers = { Authorization: `Bearer ${token}`};
     return await this.http.post(endpoint, data, {headers}).pipe(
       map(res => res.data),
-      tap(data => console.debug('res.data:', data)),
       map(data => data.url),
     ).toPromise();
   }
 
-  private async postAttachmentsPolicies(teamId: string, file: MemoryStoredFile): Promise<S3MetaData> {
+  private async postAttachmentsPolicies(token: string, teamId: string, file: MemoryStoredFile): Promise<S3MetaData> {
     const endpoint = `https://api.esa.io/v1/teams/${teamId}/attachments/policies`;
-    const headers = { Authorization: `Bearer ${ACCESS_TOKEN}`};
+    const headers = { Authorization: `Bearer ${token}`};
     const data = {
       size: file.size,
       name: file.originalName,
