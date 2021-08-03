@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { SnackBarModule } from './_shared/services';
+import { INTERCEPTOR_PROVIDERS } from './_shared/interceptors';
 
 const routes: Routes = [
   {
@@ -31,7 +32,7 @@ const routes: Routes = [
     HttpClientModule,
     SnackBarModule,
   ],
-  providers: [],
+  providers: [...INTERCEPTOR_PROVIDERS],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
