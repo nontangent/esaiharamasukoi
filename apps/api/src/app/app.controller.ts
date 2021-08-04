@@ -1,6 +1,6 @@
 import { TablePost, Team, UploadImageResponse } from '@esaiharamasukoi/api-interfaces';
 import { Body, Controller, Get, Headers, Param, Post, Query, Res } from '@nestjs/common';
-import { HasMimeType, IsFile, MaxFileSize, MemoryStoredFile, FormDataRequest } from 'nestjs-form-data';
+import { HasMimeType, IsFile, MaxFileSize, MemoryStoredFile } from 'nestjs-form-data';
 import { Response } from 'express';
 import { OAuth2 } from 'oauth';
 import { promisify } from 'util';
@@ -9,6 +9,7 @@ import * as ejs from 'ejs';
 import { AppService } from './app.service';
 import { environment } from '../environments/environment';
 import { CALLBACK_TEMPLATE } from './shared/templates/callback';
+import { FormDataRequest } from './shared/lib/fire-nest-js-form-data';
 
 const auth = new OAuth2(
   environment.oauth.clientId, 
