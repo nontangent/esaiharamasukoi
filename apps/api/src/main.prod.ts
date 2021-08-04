@@ -4,20 +4,13 @@ import * as express from 'express';
 import * as functions from 'firebase-functions';
 import { AppModule } from './app/app.module';
 
+const server = express();
+
 export async function bootstrap(expressInstance) {
-  const app = await NestFactory.create(
-    AppModule, 
-    new ExpressAdapter(expressInstance)
-  );
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
+  app.setGlobalPrefix('api');
   await app.init();
 }
 
-const expressServer = express();
-
 export const api = functions.region('us-central1')
-.https.onRequest(async (request, response) => {
-    await bootstrap(expressServer);
-    expressServer(request, response);
-});
+.https.onRequest(async (req, res) => (await bootstrap(server), server(req, res)));
