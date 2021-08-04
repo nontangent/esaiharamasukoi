@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { AuthService } from '../../services/auth';
 
 @Injectable()
@@ -17,6 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (!this.isApiRequest(request)) return next.handle(request);
 
     return this.auth.accessToken$.pipe(
+      take(1),
       map(token => request.clone({headers: request.headers.set('Authorization', `Bearer ${token}`)})),
       switchMap(request => next.handle(request)),
     );
